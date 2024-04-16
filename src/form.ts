@@ -27,12 +27,20 @@ const joinedDate = z.date({
   invalid_type_error: "Please enter a valid date.",
   required_error: "Please enter a valid date.",
 });
+const phoneNumber = z.number().optional();
+const receiveUpdates = z.boolean().default(true);
+const keywords = z.array(z.string()).default([]);
+const genderEnum = z.enum(["male", "female"]);
 
 const userSchema = z.object({
   username,
   age,
   termsAndConditions,
   joinedDate,
+  phoneNumber,
+  receiveUpdates,
+  keywords,
+  gender: genderEnum,
 });
 
 // type User = z.infer<typeof user>;
@@ -48,12 +56,15 @@ const createUser = (user: unknown) => {
   }
 };
 
-console.log("what?");
 createUser({
   username: "John",
   age: 18,
   termsAndConditions: true,
   joinedDate: new Date(),
+  phoneNumber: 98414536,
+  receiveUpdates: false,
+  keywords: ["zod", "is", "awesome"],
+  genderEnum: genderEnum.enum.male,
 });
 
 createUser({
@@ -64,8 +75,9 @@ createUser({
 });
 
 createUser({
-  username: 445,
+  username: "Sammy",
   age: 20,
+  genderEnum: genderEnum.enum.female,
   termsAndConditions: true,
   joinedDate: new Date(),
 });
