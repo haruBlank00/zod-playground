@@ -36,7 +36,8 @@ const getSunsetData = ({ lat, lng }: TCoordinate): Promise<TSunsetData> =>
         return response.json();
       })
       .then((data) => {
-        resolve(data);
+        const parsedData = sunsetDataSchema.parse(data);
+        resolve(parsedData);
       })
       .catch((e) => {
         reject(e);
